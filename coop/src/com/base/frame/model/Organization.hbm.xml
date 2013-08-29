@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="T_Organization" name="com.base.frame.model.Organization">
+    <id name="id">
+      <generator class="native"/>
+    </id>
+    <property name="name"/>
+    <property name="description"/>
+    <many-to-one column="pid" name="parent"/>
+    <set lazy="extra" inverse="true" name="children" order-by="id desc">
+      <key column="pid"/>
+      <one-to-many class="com.base.frame.model.Organization"/>
+    </set>
+  </class>
+</hibernate-mapping>

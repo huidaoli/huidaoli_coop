@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cantodo.content.persistence.PracticeSysMapper">
+
+
+	<resultMap type="com.cantodo.content.dto.PracticeSys"
+		id="practiceSys">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="type" column="type" />
+		<result property="createDate" column="createDate" />
+		<result property="content" column="content" />
+		<result property="contcode" column="contcode" />
+	</resultMap>
+	
+	<resultMap type="HashMap"
+		id="tempid">
+		<id property="attaid" column="attaid" />
+		<result property="newname" column="newname" />
+	</resultMap>
+	
+	
+
+
+	<select id="getAllInfo" parameterType="map"
+		resultMap="practiceSys">
+		SELECT id, type, name, createDate, content ,contcode FROM t_practicesys
+		<where>
+			<if test="cname != null">AND name like #{cname}</if>
+			<if test="ctype != null">AND type = #{ctype}</if>
+		</where>
+		 order by id desc limit #{offset} , #{rows}
+	</select>
+
+	<select id="getCounts" parameterType="map" resultType="int">
+		SELECT count(1) FROM t_practicesys
+		<where>
+			<if test="cname != null">AND name like #{cname}</if>
+			<if test="ctype != null">AND type = #{ctype}</if>
+		</where>
+	</select>
+	
+	<select id="getCounts2" resultType="int">
+		SELECT count(1) FROM t_practicesys
+	</select>
+
+	<select id="getInfoById" parameterType="int"
+		resultType="PracticeSys">
+		SELECT id, type, name, createDate, content ,contcode FROM t_practicesys
+		where id=#{id}
+	</select>
+	
+	<select id="getImgsById" parameterType="int"
+		resultMap="tempid">
+		select t1.attaid,t1.newname,t1.width,t1.height from t_atta t1,t_practicesys t2
+        where t1.contcode = t2.contcode and t2.id=#{id}
+	</select>
+
+	<insert id="insert" parameterType="PracticeSys">
+		INSERT INTO t_practicesys (type, name,createDate, content,contcode)
+		VALUES (#{type}, #{name},#{createDate}, #{content},#{contcode})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from t_practicesys where id=#{id}
+	</delete>
+	
+	<update id="update" parameterType="PracticeSys">
+		update t_practicesys set type= #{type}, name= #{name},createDate=#{createDate},content=#{content}
+		where id=#{id}
+	</update>
+
+
+</mapper>

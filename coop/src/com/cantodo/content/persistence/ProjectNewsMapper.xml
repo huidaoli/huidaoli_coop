@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cantodo.content.persistence.ProjectNewsMapper">
+
+	   <!-- 禁用缓存
+	<cache />
+	 -->
+
+	<resultMap type="com.cantodo.content.dto.ProjectNews"
+		id="projectNewsMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="type" column="type" />
+		<result property="createDate" column="createDate" />
+		<result property="content" column="content" />
+		<result property="contcode" column="contcode" />
+	</resultMap>
+
+
+	<select id="getAllInfo" parameterType="map"
+		resultMap="projectNewsMap">
+		SELECT id, type, name, createDate, content ,contcode FROM t_projectnews
+		<where>
+			<if test="cname != null">AND name like #{cname}</if>
+			<if test="ctype != null">AND type = #{ctype}</if>
+		</where>
+		 order by id desc limit #{offset} , #{rows}
+	</select>
+
+	<select id="getCounts" parameterType="map" resultType="int">
+		SELECT count(1) FROM t_projectnews
+		<where>
+			<if test="cname != null">AND name like #{cname}</if>
+			<if test="ctype != null">AND type = #{ctype}</if>
+		</where>
+	</select>
+	
+	<select id="getCounts2" resultType="int">
+		SELECT count(1) FROM t_projectnews
+	</select>
+
+	<select id="getInfoById" parameterType="int"
+		resultType="ProjectNews">
+		SELECT id, type, name, createDate, content ,contcode FROM t_projectnews
+		where id=#{id}
+	</select>
+
+	<insert id="insert" parameterType="ProjectNews">
+		INSERT INTO t_projectnews (type, name,createDate, content,contcode)
+		VALUES (#{type}, #{name},#{createDate}, #{content},#{contcode})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from t_projectnews where id=#{id}
+	</delete>
+	
+	<update id="update" parameterType="ProjectNews">
+		update t_projectnews set type= #{type}, name= #{name},createDate=#{createDate},content=#{content}
+		where id=#{id}
+	</update>
+
+
+</mapper>

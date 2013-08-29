@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cantodo.content.persistence.NewsMapper">
+
+	   <!-- 禁用缓存
+	<cache />
+	 -->
+	
+	<resultMap type="com.cantodo.content.dto.News"
+		id="newMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="type" column="type" />
+		<result property="createDate" column="createDate" />
+		<result property="content" column="content" />
+		<result property="contcode" column="contcode" />
+		<result property="htmlpath" column="htmlpath" />
+		<result property="state" column="state" />
+		<result property="coopid" column="coopid" />
+		<result property="optddtime" column="optddtime" />
+		<result property="zhiding" column="zhiding" />
+		<result property="typename" column="typename" />
+		<result property="coopname" column="coopname" />
+	</resultMap>
+	
+	<select id="getAllNews" parameterType="map"
+		resultMap="newMap">
+		select t2.dictName as typename,t3.companyname as coopname,t1.* from t_news t1
+		left join t_dictbuss t2 on t1.type = t2.dictId and t2.dictType=4
+		left join t_member t3 on t1.coopid= t3.id
+		<where>
+			<if test="cname != null">AND t1.name like #{cname}</if>
+			<if test="ctype != null">AND t1.type = #{ctype}</if>
+			<if test="coopid != null">AND t1.coopid = #{coopid}</if>
+			<if test="state != null">AND t1.state = #{state}</if>
+		</where>
+		 order by t1.optddtime desc,t1.id desc limit #{offset} , #{rows}
+	</select>
+	
+	<select id="getCounts" parameterType="map" resultType="int">
+		SELECT count(1) FROM t_news
+		<where>
+			<if test="cname != null">AND name like #{cname}</if>
+			<if test="ctype != null">AND type = #{ctype}</if>
+			<if test="coopid != null">AND coopid = #{coopid}</if>
+			<if test="state != null">AND state = #{state}</if>
+		</where>
+	</select>
+	
+	
+	<select id="getAllNews2" parameterType="map"
+		resultMap="newMap">
+		select t2.dictName as typename,t3.companyname as coopname,t1.* from t_news t1
+		left join t_dictbuss t2 on t1.type = t2.dictId and t2.dictType=4
+		left join t_member t3 on t1.coopid= t3.id
+		<where>
+			<if test="cname != null">AND t1.name like #{cname}</if>
+			<if test="ctype != null">AND t1.type = #{ctype}</if>
+			<if test="coopid != null">AND t1.coopid = #{coopid}</if>
+		</where>
+		 order by t1.id desc limit #{offset} , #{rows}
+	</select>
+	
+	<select id="getCounts22" parameterType="map" resultType="int">
+		SELECT count(1) FROM t_news
+		<where>
+			<if test="cname != null">AND name like #{cname}</if>
+			<if test="ctype != null">AND type = #{ctype}</if>
+			<if test="coopid != null">AND coopid = #{coopid}</if>
+		</where>
+	</select>
+	
+	<select id="getNewsById" parameterType="int"
+		resultType="News">
+		SELECT * FROM t_news where id=#{id}
+	</select>
+	
+	<select id="getNewsByContcode" resultType="News" parameterType="String">
+		SELECT * FROM t_news where  contcode = #{contcode}
+	</select>
+
+	
+
+	<insert id="insert" parameterType="map">
+		INSERT INTO t_news (type, name,createDate, content,contcode,state,coopid,optddtime)
+		VALUES (#{type}, #{name},#{createDate}, #{content},#{contcode},#{state},#{coopid},#{optddtime})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from t_news where id=#{id}
+	</delete>
+	
+	<update id="update" parameterType="News">
+		update t_news set type= #{type}, name= #{name},createDate=#{createDate},content=#{content}
+		where id=#{id}
+	</update>
+	
+	<update id="updateHtmlpath" parameterType="map">
+		update t_news set htmlpath= #{htmlpath} where contcode=#{contcode}
+	</update>
+	
+	<select id="getCounts2" resultType="int">
+		SELECT count(1) FROM t_news
+	</select>
+	
+	<update id="stateOpt" parameterType="map">
+		update t_news set state=#{state} where id = #{id}
+	</update>
+	
+	<update id="setZd" parameterType="map">
+		update t_news set zhiding=#{zhiding}, optddtime= #{optddtime} where id = #{id}
+	</update>
+
+
+</mapper>

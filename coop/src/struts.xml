@@ -1,0 +1,1332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<constant name="struts.custom.i18n.resources"
+		value="ContentsResources" />
+	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.multipart.maxSize" value="100000000" />
+
+	<!--  -->
+	<package name="default" extends="struts-default">
+		<default-action-ref name="notFound" />
+		<action name="notFound">
+			<result>/front/error.jsp</result>
+		</action>
+	</package>
+
+
+
+	<!-- Add packages here -->
+
+
+	<package name="contents" namespace="/contents"
+		extends="struts-default">
+
+		<!-- Orgniation begin-->
+		<action name="getOrgInfoList" class="org"
+			method="getOrgInfoList">
+			<result>/page/security/tree.jsp</result>
+		</action>
+
+
+		<action name="addOrg" class="org" method="addOrg">
+			<result>/page/security/editorg.jsp</result>
+		</action>
+		<action name="modOrg" class="org" method="modOrg">
+			<result>/page/security/editorg.jsp</result>
+		</action>
+
+		<action name="saveOrg" class="org" method="saveOrg" />
+
+		<action name="getOrgTreeData" class="org"
+			method="getOrgTreeData" />
+
+
+		<action name="deleOrg" class="org" method="deleOrg" />
+
+		<!-- Orgniation end-->
+
+
+		<!-- role begin-->
+		<action name="getRoleInfoList" class="role"
+			method="getRoleInfoList">
+			<result>/page/security/rolelist.jsp</result>
+		</action>
+
+		<action name="loadRole" class="role" method="loadRole">
+			<result>/page/security/editrole.jsp</result>
+		</action>
+
+		<action name="loadRoleInfoById" class="role"
+			method="loadRoleInfoById">
+			<result>/page/security/editrole.jsp</result>
+			<result name="view">/page/security/viewrole.jsp</result>
+		</action>
+
+		<action name="deleteRoles" class="role" method="deleteRoles" />
+
+		<action name="saveRole" class="role" method="saveRole" />
+
+		<action name="getRoleAjaxData" class="role"
+			method="getRoleAjaxData" />
+
+		<action name="getAllRole" class="role" method="getAllRole" />
+
+		<action name="saveACL" class="role" method="saveACL" />
+		<!-- role begin-->
+
+
+		<!-- Module begin-->
+		<action name="getModuleInfoList" class="module"
+			method="getModuleInfoList">
+			<result>/page/security/treeModule.jsp</result>
+			<result name="selectModule">
+				/page/security/selectModule.jsp
+			</result>
+		</action>
+
+
+		<action name="addModule" class="module" method="addModule">
+			<result>/page/security/editModule.jsp</result>
+		</action>
+		<action name="modModule" class="module" method="modModule">
+			<result>/page/security/editModule.jsp</result>
+		</action>
+
+		<action name="saveModule" class="module" method="saveModule" />
+
+		<action name="getModuleTreeData" class="module"
+			method="getModuleTreeData" />
+
+
+		<action name="deleModule" class="module" method="deleModule" />
+
+		<!-- Module end-->
+
+
+		<!-- User begin-->
+		<action name="getUserInfoList" class="userinfo"
+			method="getUserInfoList">
+			<result>/page/security/userlist.jsp</result>
+		</action>
+
+		<action name="loadUser" class="userinfo" method="loadUser">
+			<result>/page/security/edituser.jsp</result>
+		</action>
+
+		<action name="loadUserInfoById" class="userinfo"
+			method="loadUserInfoById">
+			<result>/page/security/edituser.jsp</result>
+			<result name="view">/page/security/viewuser.jsp</result>
+		</action>
+
+		<action name="deleteUsers" class="userinfo"
+			method="deleteUsers" />
+
+		<action name="resetUserPass" class="userinfo"
+			method="resetUserPass" />
+
+
+
+		<action name="saveUser" class="userinfo" method="saveUser" />
+
+		<action name="getUserAjaxData" class="userinfo"
+			method="getUserAjaxData" />
+		<!-- User begin-->
+
+	</package>
+
+
+
+
+
+	<package name="sysadmin" namespace="/sysadmin"
+		extends="struts-default">
+		<action name="login" class="index" method="login" />
+
+		<action name="getMenus" class="index" method="getMenus" />
+
+		<action name="getUrl" class="index" method="getUrl" />
+
+		<action name="loginOut" class="index" method="loginOut" />
+
+		<action name="toLogin" class="index" method="toLogin">
+			<result>/sysadmin/login.jsp</result>
+		</action>
+		<action name="index" class="index" method="index">
+			<result>/sysadmin/main.jsp</result>
+		</action>
+
+		<action name="welcome" class="index" method="welcome">
+			<result>/sysadmin/welcome.jsp</result>
+		</action>
+
+
+
+		<action name="timeOut" class="timeOut" method="timeOut">
+			<result>/sysadmin/timeOut.jsp</result>
+		</action>
+
+	</package>
+
+
+	<package name="buse" namespace="/buse" extends="struts-default">
+
+		<action name="addLeave" class="leaveAction" method="addLeave">
+			<result>/page/business/editleave.jsp</result>
+		</action>
+
+		<action name="leaveList" class="leaveAction"
+			method="leaveList">
+			<result>/page/business/listleave.jsp</result>
+		</action>
+
+		<action name="exceCartList" class="leaveAction"
+			method="exceCartList">
+			<result>/page/business/excecart.jsp</result>
+		</action>
+
+		<action name="toAddExceCart" class="leaveAction"
+			method="toAddExceCart">
+			<result>/page/business/editexcecart.jsp</result>
+		</action>
+
+		<action name="saveLeave" class="leaveAction" method="saveLeave" />
+
+		<action name="submit" class="leaveAction" method="submit" />
+
+		<action name="getLeaveAjaxData" class="leaveAction"
+			method="getLeaveAjaxData" />
+
+		<action name="loadLeaveById" class="leaveAction"
+			method="loadLeaveById">
+			<result name="view">/page/business/viewleave.jsp</result>
+			<result>/page/business/editleave.jsp</result>
+		</action>
+
+		<action name="submitInput" class="leaveAction"
+			method="submitInput">
+			<result name="submit">
+				/page/business/submitinput.jsp
+			</result>
+			<result name="approve">
+				/page/business/approveinput.jsp
+			</result>
+		</action>
+
+		<action name="leaveApprove" class="leaveAction"
+			method="leaveApprove">
+			<result>/page/business/leaveApprove.jsp</result>
+		</action>
+
+		<action name="approve" class="leaveAction" method="approve">
+			<result name="noApprove">
+				/page/business/noapprove.jsp
+			</result>
+			<result name="hasApprove">
+				/page/business/hasapprove.jsp
+			</result>
+		</action>
+
+		<action name="approveData" class="leaveAction"
+			method="approveData" />
+
+		<action name="approvingList" class="leaveAction"
+			method="approvingList" />
+
+		<action name="approvedList" class="leaveAction"
+			method="approvedList" />
+
+		<action name="deleteLeave" class="leaveAction"
+			method="deleteLeave" />
+
+		<action name="processImage" class="leaveAction"
+			method="processImage">
+			<result>/page/business/processImage.jsp</result>
+		</action>
+
+		<action name="approvedHistory" class="leaveAction"
+			method="approvedHistory">
+			<result>/page/business/approvedhistory.jsp</result>
+		</action>
+
+
+		<action name="toAddEquInfo" class="equipmentAction"
+			method="toAddEquInfo">
+			<result>/page/equipment/addequipment.jsp</result>
+		</action>
+		<action name="equmentAcount" class="equipmentAction"
+			method="equmentAcount">
+			<result>/page/equipment/equmentacount.jsp</result>
+		</action>
+		<action name="equmentLog" class="equipmentAction"
+			method="equmentLog">
+			<result>/page/equipment/equmentlog.jsp</result>
+		</action>
+
+		<action name="getEquipmentTreeData" class="equipmentAction"
+			method="getEquipmentTreeData" />
+
+		<action name="getEquipmentTreeData" class="equipmentAction"
+			method="getEquipmentTreeData" />
+
+		<action name="getEqumentDetailInfo" class="equipmentAction"
+			method="getEqumentDetailInfo">
+			<result>/page/equipment/equmentdetail.jsp</result>
+		</action>
+
+	</package>
+
+	<package name="sys" namespace="/sys" extends="struts-default">
+
+		<action name="toSysConfing" class="smAction"
+			method="toSysConfing">
+			<result>/page/sys/sysconfig.jsp</result>
+		</action>
+
+		<action name="getSysConfingData" class="smAction"
+			method="getSysConfingData" />
+
+		<action name="saveConfing" class="smAction"
+			method="saveConfing" />
+	</package>
+
+	<package name="upload" namespace="/upload"
+		extends="struts-default">
+
+		<action name="toUpload" class="uploadAction"
+			method="toUpload">
+			<result>/page/upload/upload.jsp</result>
+		</action>
+
+		<action name="savefile" class="uploadAction" method="savefile" />
+
+		<action name="downLoadAtta" class="uploadAction"
+			method="downLoadAtta" />
+
+		<action name="deleAtta" class="uploadAction" method="deleAtta" />
+
+		<action name="getAttaById" class="uploadAction"
+			method="getAttaById">
+			<result>/page/upload/editupload.jsp</result>
+			<result name="view">/page/upload/viewupload.jsp</result>
+		</action>
+
+
+	</package>
+
+	<package name="openclass" namespace="/openclass"
+		extends="struts-default">
+
+		<action name="getClassInfoList" class="openClassAction"
+			method="getClassInfoList">
+			<result>/page/openclass/openclasslist.jsp</result>
+		</action>
+
+		<action name="getAjaxData" class="openClassAction"
+			method="getAjaxData" />
+
+		<action name="loadOpenClass" class="openClassAction"
+			method="loadOpenClass">
+			<result>/page/openclass/editclass.jsp</result>
+		</action>
+
+		<action name="saveOpenClass" class="openClassAction"
+			method="saveOpenClass" />
+
+		<action name="saveState" class="openClassAction"
+			method="saveState" />
+
+
+
+		<action name="deleteOpenClasss" class="openClassAction"
+			method="deleteOpenClasss" />
+
+		<action name="loadOpenClassInfoById" class="openClassAction"
+			method="loadOpenClassInfoById">
+			<result>/page/openclass/editclass.jsp</result>
+			<result name="view">/page/openclass/viewclass.jsp</result>
+		</action>
+
+		<action name="getMemByClassId" class="openClassAction"
+			method="getMemByClassId">
+			<result>/page/openclass/getmembyclassid.jsp</result>
+		</action>
+
+
+
+	</package>
+
+	<package name="news" namespace="/news" extends="struts-default">
+
+		<action name="getNewsList" class="newsAction"
+			method="getNewsList">
+			<result>/page/news/newslist.jsp</result>
+		</action>
+
+		<action name="getAjaxData" class="newsAction"
+			method="getAjaxData" />
+
+		<action name="loadNews" class="newsAction" method="loadNews">
+			<result>/page/news/editnews.jsp</result>
+		</action>
+
+		<action name="saveNews" class="newsAction" method="saveNews" />
+
+		<action name="deleteNews" class="newsAction"
+			method="deleteNews" />
+
+		<action name="stateOpt" class="newsAction" method="stateOpt" />
+
+		<action name="setTop" class="newsAction" method="setTop" />
+
+		<action name="loadNewsInfoById" class="newsAction"
+			method="loadNewsInfoById">
+			<result>/page/news/editnews.jsp</result>
+			<result name="view">/page/news/viewnews.jsp</result>
+		</action>
+
+	</package>
+
+	<package name="project" namespace="/project"
+		extends="struts-default">
+
+		<action name="toLoadList" class="projectAction"
+			method="toLoadList">
+			<result>/page/project/listproject.jsp</result>
+		</action>
+
+		<action name="getAjaxData" class="projectAction"
+			method="getAjaxData" />
+
+		<action name="loadEdit" class="projectAction"
+			method="loadEdit">
+			<result>/page/project/editproject.jsp</result>
+		</action>
+
+		<action name="saveOrUpdate" class="projectAction"
+			method="saveOrUpdate" />
+
+		<action name="delete" class="projectAction" method="delete" />
+
+		<action name="downl" class="projectAction" method="downl" />
+
+		<action name="getMemByProjectId" class="projectAction"
+			method="getMemByProjectId">
+			<result>/page/project/getmembyprojectid.jsp</result>
+		</action>
+
+		<action name="saveState" class="projectAction"
+			method="saveState" />
+
+		<action name="getInfoById" class="projectAction"
+			method="getInfoById">
+			<result>/page/project/editproject.jsp</result>
+			<result name="view">/page/project/viewproject.jsp</result>
+		</action>
+
+		<action name="toImport" class="projectAction"
+			method="toImport">
+			<result>/page/project/import.jsp</result>
+		</action>
+
+		<action name="importExcel" class="projectAction"
+			method="importExcel" />
+
+	</package>
+
+	<package name="talents" namespace="/talents"
+		extends="struts-default">
+
+		<action name="toLoadList" class="talentsAction"
+			method="toLoadList">
+			<result>/page/talents/listtalents.jsp</result>
+		</action>
+
+		<action name="getAjaxData" class="talentsAction"
+			method="getAjaxData" />
+
+		<action name="loadEdit" class="talentsAction"
+			method="loadEdit">
+			<result>/page/talents/edittalents.jsp</result>
+		</action>
+
+		<action name="saveOrUpdate" class="talentsAction"
+			method="saveOrUpdate" />
+
+		<action name="delete" class="talentsAction" method="delete" />
+
+		<action name="getInfoById" class="talentsAction"
+			method="getInfoById">
+			<result>/page/talents/edittalents.jsp</result>
+			<result name="view">/page/talents/viewtalents.jsp</result>
+		</action>
+
+
+	</package>
+
+	<package name="projectnews" namespace="/projectnews"
+		extends="struts-default">
+
+		<action name="toLoadList" class="projectnewsAction"
+			method="toLoadList">
+			<result>/page/projectnews/listprojectnews.jsp</result>
+		</action>
+
+		<action name="getAjaxData" class="projectnewsAction"
+			method="getAjaxData" />
+
+		<action name="loadEdit" class="projectnewsAction"
+			method="loadEdit">
+			<result>/page/projectnews/editprojectnews.jsp</result>
+		</action>
+
+		<action name="saveOrUpdate" class="projectnewsAction"
+			method="saveOrUpdate" />
+
+		<action name="delete" class="projectnewsAction" method="delete" />
+
+		<action name="getInfoById" class="projectnewsAction"
+			method="getInfoById">
+			<result>/page/projectnews/editprojectnews.jsp</result>
+			<result name="view">
+				/page/projectnews/viewprojectnews.jsp
+			</result>
+		</action>
+	</package>
+
+	<package name="member" namespace="/member"
+		extends="struts-default">
+
+		<action name="toLoadList" class="memberAction"
+			method="toLoadList">
+			<result>/page/member/listmember.jsp</result>
+		</action>
+		
+		<action name="selectmember" class="memberAction"
+			method="selectmember">
+			<result>/page/member/selectmember.jsp</result>
+		</action>
+
+		<action name="getAjaxData" class="memberAction"
+			method="getAjaxData" />
+
+		<action name="loadEdit" class="memberAction"
+			method="loadEdit">
+			<result>/page/member/editmember.jsp</result>
+		</action>
+
+		<action name="lockorunlock" class="memberAction"
+			method="lockorunlock" />
+
+		<action name="resetPass" class="memberAction"
+			method="resetPass" />
+
+		<action name="generPass" class="memberAction"
+			method="generPass" />
+
+
+
+		<action name="delete" class="memberAction" method="delete" />
+
+		<action name="getInfoById" class="memberAction"
+			method="getInfoById">
+			<result>/page/member/editmember.jsp</result>
+			<result name="view">/page/member/viewmember.jsp</result>
+		</action>
+
+
+		<action name="stateOpt" class="memberAction" method="stateOpt" />
+
+		<action name="saveFphone" class="memberAction"
+			method="saveFphone" />
+
+	</package>
+
+
+
+	<package name="trainingsys" namespace="/trainingsys"
+		extends="struts-default">
+
+		<action name="toLoadList" class="trainingsysAction"
+			method="toLoadList">
+			<result>/page/trainingsys/listtrainingsys.jsp</result>
+		</action>
+
+		<action name="getAjaxData" class="trainingsysAction"
+			method="getAjaxData" />
+
+		<action name="loadEdit" class="trainingsysAction"
+			method="loadEdit">
+			<result>/page/trainingsys/edittrainingsys.jsp</result>
+		</action>
+
+		<action name="saveOrUpdate" class="trainingsysAction"
+			method="saveOrUpdate" />
+
+		<action name="delete" class="trainingsysAction" method="delete" />
+
+		<action name="getInfoById" class="trainingsysAction"
+			method="getInfoById">
+			<result>/page/trainingsys/edittrainingsys.jsp</result>
+			<result name="view">
+				/page/trainingsys/viewtrainingsys.jsp
+			</result>
+		</action>
+
+		<action name="getImgsById" class="trainingsysAction"
+			method="getImgsById">
+			<result>/page/trainingsys/getimgs.jsp</result>
+		</action>
+
+		<action name="saveImgPro" class="trainingsysAction"
+			method="saveImgPro" />
+
+		<action name="resImg" class="trainingsysAction" method="resImg" />
+
+
+
+	</package>
+
+
+	<package name="randdsys" namespace="/randdsys"
+		extends="struts-default">
+
+		<action name="toLoadList" class="randdsysAction"
+			method="toLoadList">
+			<result>/page/randdsys/listranddsys.jsp</result>
+		</action>
+
+		<action name="getAjaxData" class="randdsysAction"
+			method="getAjaxData" />
+
+		<action name="loadEdit" class="randdsysAction"
+			method="loadEdit">
+			<result>/page/randdsys/editranddsys.jsp</result>
+		</action>
+
+		<action name="saveOrUpdate" class="randdsysAction"
+			method="saveOrUpdate" />
+
+		<action name="delete" class="randdsysAction" method="delete" />
+
+		<action name="getInfoById" class="randdsysAction"
+			method="getInfoById">
+			<result>/page/randdsys/editranddsys.jsp</result>
+			<result name="view">/page/randdsys/viewranddsys.jsp</result>
+		</action>
+
+		<action name="getImgsById" class="randdsysAction"
+			method="getImgsById">
+			<result>/page/randdsys/getimgs.jsp</result>
+		</action>
+
+
+	</package>
+
+
+	<package name="practicesys" namespace="/practicesys"
+		extends="struts-default">
+
+		<action name="toLoadList" class="practiceSysAction"
+			method="toLoadList">
+			<result>/page/practicesys/listpracticesys.jsp</result>
+		</action>
+
+		<action name="getAjaxData" class="practiceSysAction"
+			method="getAjaxData" />
+
+		<action name="loadEdit" class="practiceSysAction"
+			method="loadEdit">
+			<result>/page/practicesys/editpracticesys.jsp</result>
+		</action>
+
+		<action name="saveOrUpdate" class="practiceSysAction"
+			method="saveOrUpdate" />
+
+		<action name="delete" class="practiceSysAction" method="delete" />
+
+		<action name="getInfoById" class="practiceSysAction"
+			method="getInfoById">
+			<result>/page/practicesys/editpracticesys.jsp</result>
+			<result name="view">
+				/page/practicesys/viewpracticesys.jsp
+			</result>
+		</action>
+
+		<action name="getImgsById" class="practiceSysAction"
+			method="getImgsById">
+			<result>/page/practicesys/getimgs.jsp</result>
+		</action>
+
+	</package>
+
+
+	<package name="trainingresult" namespace="/trainingresult"
+		extends="struts-default">
+
+		<action name="toLoadList" class="trainingResultAction"
+			method="toLoadList">
+			<result>/page/trainingresult/listtrainingresult.jsp</result>
+		</action>
+
+		<action name="getAjaxData" class="trainingResultAction"
+			method="getAjaxData" />
+
+		<action name="loadEdit" class="trainingResultAction"
+			method="loadEdit">
+			<result>/page/trainingresult/edittrainingresult.jsp</result>
+		</action>
+
+		<action name="saveOrUpdate" class="trainingResultAction"
+			method="saveOrUpdate" />
+
+		<action name="delete" class="trainingResultAction"
+			method="delete" />
+
+		<action name="getInfoById" class="trainingResultAction"
+			method="getInfoById">
+			<result>/page/trainingresult/edittrainingresult.jsp</result>
+			<result name="view">
+				/page/trainingresult/viewtrainingresult.jsp
+			</result>
+		</action>
+
+	</package>
+
+
+	<package name="randdresult" namespace="/randdresult"
+		extends="struts-default">
+
+		<action name="toLoadList" class="randDResultAction"
+			method="toLoadList">
+			<result>/page/randdresult/listranddresult.jsp</result>
+		</action>
+
+		<action name="getAjaxData" class="randDResultAction"
+			method="getAjaxData" />
+
+		<action name="loadEdit" class="randDResultAction"
+			method="loadEdit">
+			<result>/page/randdresult/editranddresult.jsp</result>
+		</action>
+
+		<action name="saveOrUpdate" class="randDResultAction"
+			method="saveOrUpdate" />
+
+		<action name="delete" class="randDResultAction" method="delete" />
+
+		<action name="getInfoById" class="randDResultAction"
+			method="getInfoById">
+			<result>/page/randdresult/editranddresult.jsp</result>
+			<result name="view">
+				/page/randdresult/viewranddresult.jsp
+			</result>
+		</action>
+
+	</package>
+
+
+	<package name="practiceresult" namespace="/practiceresult"
+		extends="struts-default">
+
+		<action name="toLoadList" class="practiceResultAction"
+			method="toLoadList">
+			<result>/page/practiceresult/listpracticresult.jsp</result>
+		</action>
+
+		<action name="getAjaxData" class="practiceResultAction"
+			method="getAjaxData" />
+
+		<action name="loadEdit" class="practiceResultAction"
+			method="loadEdit">
+			<result>/page/practiceresult/editpracticresult.jsp</result>
+		</action>
+
+		<action name="saveOrUpdate" class="practiceResultAction"
+			method="saveOrUpdate" />
+
+		<action name="delete" class="practiceResultAction"
+			method="delete" />
+
+		<action name="getInfoById" class="practiceResultAction"
+			method="getInfoById">
+			<result>/page/practiceresult/editpracticresult.jsp</result>
+			<result name="view">
+				/page/practiceresult/viewpracticresult.jsp
+			</result>
+		</action>
+
+	</package>
+
+
+	<package name="resource" namespace="/resource"
+		extends="struts-default">
+
+		<action name="toLoadList" class="resourceAction"
+			method="toLoadList">
+			<result>/page/resource/listresource.jsp</result>
+		</action>
+
+		<action name="getAjaxData" class="resourceAction"
+			method="getAjaxData" />
+
+		<action name="loadEdit" class="resourceAction"
+			method="loadEdit">
+			<result>/page/resource/editresource.jsp</result>
+		</action>
+
+		<action name="saveOrUpdate" class="resourceAction"
+			method="saveOrUpdate" />
+
+		<action name="delete" class="resourceAction" method="delete" />
+
+		<action name="getInfoById" class="resourceAction"
+			method="getInfoById">
+			<result>/page/resource/editresource.jsp</result>
+			<result name="view">/page/resource/viewresource.jsp</result>
+		</action>
+
+	</package>
+
+	<package name="information" namespace="/information"
+		extends="struts-default">
+
+		<action name="toLoadList" class="informationAction"
+			method="toLoadList">
+			<result>/page/information/listinformation.jsp</result>
+		</action>
+
+		<action name="getAjaxData" class="informationAction"
+			method="getAjaxData" />
+
+		<action name="loadEdit" class="informationAction"
+			method="loadEdit">
+			<result>/page/information/editinformation.jsp</result>
+		</action>
+
+		<action name="saveOrUpdate" class="informationAction"
+			method="saveOrUpdate" />
+
+		<action name="delete" class="informationAction" method="delete" />
+
+		<action name="getInfoById" class="informationAction"
+			method="getInfoById">
+			<result>/page/information/editinformation.jsp</result>
+			<result name="view">
+				/page/information/viewinformation.jsp
+			</result>
+		</action>
+	</package>
+
+	<package name="scrollinfo" namespace="/scrollinfo"
+		extends="struts-default">
+
+		<action name="toLoadList" class="scrollinfoAction"
+			method="toLoadList">
+			<result>/page/scrollinfo/listscrollinfo.jsp</result>
+		</action>
+
+		<action name="getAjaxData" class="scrollinfoAction"
+			method="getAjaxData" />
+
+		<action name="loadEdit" class="scrollinfoAction"
+			method="loadEdit">
+			<result>/page/scrollinfo/editscrollinfo.jsp</result>
+		</action>
+
+		<action name="saveOrUpdate" class="scrollinfoAction"
+			method="saveOrUpdate" />
+
+		<action name="delete" class="scrollinfoAction" method="delete" />
+
+		<action name="getInfoById" class="scrollinfoAction"
+			method="getInfoById">
+			<result>/page/scrollinfo/editscrollinfo.jsp</result>
+			<result name="view">
+				/page/scrollinfo/viewscrollinfo.jsp
+			</result>
+		</action>
+
+	</package>
+
+	<package name="ads" namespace="/ads" extends="struts-default">
+
+		<action name="toLoadList" class="adsAction"
+			method="toLoadList">
+			<result>/page/ads/listads.jsp</result>
+		</action>
+
+		<action name="getAjaxData" class="adsAction"
+			method="getAjaxData" />
+
+		<action name="loadEdit" class="adsAction" method="loadEdit">
+			<result>/page/ads/editads.jsp</result>
+		</action>
+
+		<action name="saveOrUpdate" class="adsAction"
+			method="saveOrUpdate" />
+
+		<action name="delete" class="adsAction" method="delete" />
+
+		<action name="getInfoById" class="adsAction"
+			method="getInfoById">
+			<result>/page/ads/editads.jsp</result>
+			<result name="view">/page/ads/viewads.jsp</result>
+		</action>
+
+	</package>
+
+
+	<package name="bgimg" namespace="/bgimg" extends="struts-default">
+
+		<action name="toLoadList" class="bgimgAction"
+			method="toLoadList">
+			<result>/page/bgimg/listbgimg.jsp</result>
+		</action>
+
+		<action name="getAjaxData" class="bgimgAction"
+			method="getAjaxData" />
+
+
+		<action name="usedBgImg" class="bgimgAction" method="usedBgImg" />
+
+
+		<action name="loadEdit" class="bgimgAction" method="loadEdit">
+			<result>/page/bgimg/editbgimg.jsp</result>
+		</action>
+
+		<action name="saveOrUpdate" class="bgimgAction"
+			method="saveOrUpdate" />
+
+		<action name="delete" class="bgimgAction" method="delete" />
+
+		<action name="getInfoById" class="bgimgAction"
+			method="getInfoById">
+			<result>/page/bgimg/editbgimg.jsp</result>
+			<result name="view">/page/bgimg/viewbgimg.jsp</result>
+		</action>
+
+	</package>
+
+
+	<package name="bussdict" namespace="/bussdict"
+		extends="struts-default">
+
+		<action name="toLoadList" class="bussdictAction"
+			method="toLoadList">
+			<result>/page/bussdict/listbussdict.jsp</result>
+		</action>
+
+		<action name="getAjaxData" class="bussdictAction"
+			method="getAjaxData" />
+
+		<action name="save" class="bussdictAction" method="save" />
+
+		<action name="saveCont" class="bussdictAction"
+			method="saveCont" />
+
+		<action name="getInfoById" class="bussdictAction"
+			method="getInfoById">
+			<result>/page/bussdict/editbussdict.jsp</result>
+		</action>
+
+	</package>
+
+	<package name="manacont" namespace="/manacont"
+		extends="struts-default">
+
+		<action name="toManacont" class="manacontAction"
+			method="toManacont">
+			<result>/page/manacont/editmanacont.jsp</result>
+		</action>
+
+		<action name="save" class="manacontAction" method="save" />
+
+		<action name="update" class="manacontAction" method="update" />
+	</package>
+
+
+	<!-- 首页管理 -->
+	<package name="front" namespace="/" extends="struts-default">
+
+		<global-results>
+			<result name="error">error.html</result>
+		</global-results>
+
+		<action name="index" class="indexManaAction" method="index">
+			<result>/front/index.jsp</result>
+		</action>
+
+		<action name="error" class="indexManaAction" method="error">
+			<result>/front/error2.jsp</result>
+		</action>
+
+		<action name="register" class="indexManaAction"
+			method="register">
+			<result>/front/register.jsp</result>
+		</action>
+
+		<action name="checkPhoneNo" class="indexManaAction"
+			method="checkPhoneNo" />
+
+		<action name="saveMember" class="indexManaAction"
+			method="saveMember">
+			<interceptor-ref name="token" />
+			<interceptor-ref name="defaultStack" />
+			<result name="error">register.html</result>
+			<result>/front/step.jsp</result>
+			<result name="invalid.token">/front/step.jsp</result>
+		</action>
+
+		<action name="savestep" class="indexManaAction"
+			method="savestep" />
+
+		<action name="step" class="indexManaAction" method="step">
+			<result>/front/step.jsp</result>
+		</action>
+
+
+
+		<action name="updateMember" class="indexManaAction"
+			method="updateMember" />
+
+		<action name="chenkEmail" class="indexManaAction"
+			method="chenkEmail" />
+
+		<action name="toPartNews" class="indexManaAction"
+			method="toPartNews">
+			<result>/front/partnews.jsp</result>
+		</action>
+
+		<action name="toPartProjectNews" class="indexManaAction"
+			method="toPartProjectNews">
+			<result>/front/partprojectnews.jsp</result>
+		</action>
+
+
+		<action name="toPartTalents" class="indexManaAction"
+			method="toPartTalents">
+			<result>/front/parttalents.jsp</result>
+		</action>
+		
+		
+		<action name="getAgreementInfoById" class="indexManaAction"
+			method="getAgreementInfoById">
+			<result>/page/agreement/editagreement.jsp</result>
+			<result name="view">
+				/page/agreement/viewagreement.jsp
+			</result>
+			<result name="viewcaigou">
+				/page/agreement/caigou.jsp
+			</result>
+			<result name="printcaigou">
+				/page/agreement/printcaigou.jsp
+			</result>
+		</action>
+		
+
+		<action name="toProduct" class="indexManaAction"
+			method="toProduct">
+			<result>/front/product.jsp</result>
+		</action>
+		
+		<action name="tocompanyproduct" class="indexManaAction"
+			method="tocompanyproduct">
+			<result>/front/companyproduct.jsp</result>
+		</action>
+
+		<action name="toProductDetail" class="productManaAction"
+			method="toProductDetail">
+			<result>/front/productDetail.jsp</result>
+		</action>
+
+		<action name="toLogin" class="indexManaAction"
+			method="toLogin">
+			<result>/front/tologin.jsp</result>
+		</action>
+
+		<action name="showmessage" class="indexManaAction"
+			method="showmessage">
+			<result>/front/showmessage.jsp</result>
+		</action>
+		
+		<action name="getAttaById" class="uploadAction"
+			method="getAttaById">
+			<result>/page/upload/editupload.jsp</result>
+			<result name="view">/page/upload/viewupload.jsp</result>
+		</action>
+		
+		<action name="downLoadAtta" class="uploadAction"
+			method="downLoadAtta" />
+			
+		<action name="downAtta" class="resumeAction"
+			method="downResume"/>
+
+		<action name="partmessage" class="indexManaAction"
+			method="partmessage">
+			<result>/front/partmessage.jsp</result>
+		</action>
+
+		<action name="showtabs" class="indexManaAction"
+			method="showtabs">
+			<result>/front/tabshtml.jsp</result>
+		</action>
+
+		<action name="memLogin" class="indexManaAction"
+			method="memLogin" />
+
+		<action name="loginsucc" class="indexManaAction"
+			method="loginsucc">
+			<result>/front/loginsucc.jsp</result>
+		</action>
+
+		<action name="myspace" class="indexManaAction"
+			method="myspace">
+			<result>/front/myspace.jsp</result>
+		</action>
+
+		<action name="getProductDetail" class="indexManaAction"
+			method="getProductDetail">
+			<result>/front/getProductDetail.jsp</result>
+		</action>
+
+
+		<action name="updateContent" class="indexManaAction"
+			method="updateContent" />
+
+		<action name="checkIsFinish" class="indexManaAction"
+			method="checkIsFinish" />
+
+
+		<action name="company" class="indexManaAction"
+			method="company">
+			<result>/front/company.jsp</result>
+
+			<result name="error">/front/error.jsp</result>
+		</action>
+
+		<action name="myspacemenu" class="indexManaAction"
+			method="myspacemenu">
+			<result name="tobowen">/front/tobowen.jsp</result>
+			<result name="topads">/front/topads.jsp</result>
+			<result name="baseinfo">/front/baseinfo.jsp</result>
+			<result name="changepass">/front/changepass.jsp</result>
+			<result name="productmana">/front/productmana.jsp</result>
+			<result name="heyue">/front/heyue.jsp</result>
+			<result name="us">/front/us.jsp</result>
+			<result>/front/myspacemenu.jsp</result>
+		</action>
+
+		<action name="getMemById" class="indexManaAction"
+			method="getMemById" />
+
+		<action name="logout" class="indexManaAction" method="logout" />
+
+		<action name="getMemById" class="indexManaAction"
+			method="getMemById">
+			<result>/front/infobyid.jsp</result>
+			<result name="error">/front/error.jsp</result>
+		</action>
+
+		<action name="refreshLoginInfo" class="indexManaAction"
+			method="refreshLoginInfo">
+			<result>/front/loginhtml.jsp</result>
+		</action>
+		
+		<action name="getAgreementAjaxData" class="indexManaAction"
+			method="getAgreementAjaxData" />
+
+		<action name="toChangePass" class="indexManaAction"
+			method="toChangePass">
+			<result>/front/changepass.jsp</result>
+		</action>
+
+		<action name="savePass" class="indexManaAction"
+			method="savePass" />
+			
+	
+	   <action name="getAjaxDataNews" class="coopNewsAction"
+			method="getAjaxDataNews" />
+
+		<action name="loadNews" class="coopNewsAction"
+			method="loadNews">
+			<result>/page/news/editnews2.jsp</result>
+		</action>
+
+		<action name="saveNews" class="coopNewsAction"
+			method="saveNews" />
+
+		<action name="deleteNews" class="coopNewsAction"
+			method="deleteNews" />
+
+		<action name="stateOpt" class="coopNewsAction"
+			method="stateOpt" />
+
+		<action name="setTop" class="coopNewsAction" method="setTop" />
+
+		<action name="loadNewsInfoById" class="coopNewsAction"
+			method="loadNewsInfoById">
+			<result>/page/news/editnews2.jsp</result>
+			<result name="view">/page/news/viewnews2.jsp</result>
+		</action>
+
+
+		<action name="queryInfoById" class="queryInfoAction"
+			method="queryInfoById">
+			<result>/front/queryinfobyid.jsp</result>
+			<result name="success2">/front/queryinfobyid2.jsp</result>
+			
+		</action>
+
+		<action name="queryMoreInfoByType" class="queryInfoAction"
+			method="queryMoreInfoByType">
+			<result>/front/querymoreinfobytype.jsp</result>
+		</action>
+
+		<action name="procimg" class="processImage" method="procimg" />
+
+
+		<action name="loadProduct" class="productManaAction"
+			method="loadProduct">
+			<result>/front/editproduct.jsp</result>
+			<result name="viewproduct">/front/viewproduct.jsp</result>
+		</action>
+
+		<action name="saveOrUpdateProduct" class="productManaAction"
+			method="saveOrUpdateProduct" />
+
+
+		<action name="getProductList" class="productManaAction"
+			method="getProductList" />
+
+		<action name="deleteProduct" class="productManaAction"
+			method="deleteProduct" />
+
+		<action name="lineOpt" class="productManaAction"
+			method="lineOpt" />
+
+
+		<action name="toLoadListcads" class="consAdsAction"
+			method="toLoadListcads">
+			<result>/front/topads.jsp</result>
+		</action>
+
+		<action name="getAjaxDatacads" class="consAdsAction"
+			method="getAjaxDatacads" />
+
+		<action name="loadEditcads" class="consAdsAction"
+			method="loadEditcads">
+			<result>/front/editads.jsp</result>
+		</action>
+
+		<action name="saveOrUpdatecads" class="consAdsAction"
+			method="saveOrUpdatecads" />
+
+		<action name="deletecads" class="consAdsAction"
+			method="deletecads" />
+
+		<action name="getInfoByIdcads" class="consAdsAction"
+			method="getInfoByIdcads">
+			<result>/front/editads.jsp</result>
+			<result name="view">/front/viewads.jsp</result>
+		</action>
+
+	</package>
+
+	<package name="product" namespace="/product"
+		extends="struts-default">
+
+		<action name="loadProduct" class="productAction"
+			method="loadProduct">
+			<result name="viewproduct">
+				/page/product/viewproduct.jsp
+			</result>
+			<result>/page/product/editproduct.jsp</result>
+		</action>
+
+		<action name="toLoadList" class="productAction"
+			method="toLoadList">
+			<result>/page/product/productlist.jsp</result>
+		</action>
+		
+		<action name="selectproductlist" class="productAction"
+			method="selectproductlist">
+			<result>/page/product/selectproductlist.jsp</result>
+		</action>
+
+		<action name="saveOrUpdateProduct" class="productAction"
+			method="saveOrUpdateProduct" />
+
+
+		<action name="getProductList" class="productAction"
+			method="getProductList" />
+
+		<action name="deleteProduct" class="productAction"
+			method="deleteProduct" />
+
+		<action name="stateOpt" class="productAction" method="stateOpt" />
+
+		<action name="synctoshop" class="productAction"
+			method="synctoshop" />
+			
+
+	</package>
+
+	<package name="agreement" namespace="/agreement"
+		extends="struts-default">
+
+		<action name="toLoadList" class="agreementAction"
+			method="toLoadList">
+			<result>/page/agreement/listagreement.jsp</result>
+		</action>
+		
+		<action name="getAgreeByType" class="agreementAction"
+			method="getAgreeByType">
+			<result name="caigou">/page/agreement/caigou.jsp</result>
+			<result name="jiameng">/page/agreement/jiameng.jsp</result>
+		</action>
+
+		<action name="getAjaxData" class="agreementAction"
+			method="getAjaxData" />
+
+		<action name="loadEdit" class="agreementAction"
+			method="loadEdit">
+			<result>/page/agreement/editagreement.jsp</result>
+		</action>
+
+		<action name="saveOrUpdate" class="agreementAction"
+			method="saveOrUpdate" />
+			
+		<action name="passAgree" class="agreementAction"
+			method="passAgree" />	
+			
+		<action name="checkState" class="agreementAction"
+			method="checkState" />	
+			
+
+		<action name="delete" class="agreementAction" method="delete" />
+
+		<action name="getInfoById" class="agreementAction"
+			method="getInfoById">
+			<result>/page/agreement/editagreement.jsp</result>
+			<result name="view">
+				/page/agreement/viewagreement.jsp
+			</result>
+			<result name="viewcaigou">
+				/page/agreement/caigou.jsp
+			</result>
+			<result name="printcaigou">
+				/page/agreement/printcaigou.jsp
+			</result>
+		</action>
+		
+		<action name="stateOpt" class="agreementAction" method="stateOpt" />
+
+	</package>
+
+</struts>
