@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cantodo.content.persistence.AgreementMapper">
+
+	   <!-- 禁用缓存
+	<cache />
+	 -->
+	<resultMap type="com.cantodo.content.dto.Agreement"
+		id="agreementMap">
+		<id property="id" column="id" />
+		<result property="no" column="no" />
+		<result property="type" column="type" />
+		<result property="title" column="title" />
+		<result property="createDate" column="createDate" />
+		<result property="type" column="type" />
+		<result property="state" column="state" />
+		<result property="coopid" column="coopid" />
+		<result property="typename" column="typename" />
+		<result property="coopname" column="coopname" />
+	</resultMap>
+	
+	<select id="getAllInfo" parameterType="map"
+		resultMap="agreementMap">
+		select t2.dictName as typename,t3.companyname as coopname,t1.* from t_agreement t1
+		left join t_dictbuss t2 on t1.type = t2.dictId and t2.dictType=18
+		left join t_member t3 on t1.coopid= t3.id
+		<where>
+		    <if test="coopid != null">AND t1.coopid = #{coopid}</if>
+			<if test="title != null">AND t1.title like #{title}</if>
+			<if test="type != null">AND t1.type = #{type}</if>
+			<if test="state != null">AND t1.state = #{state}</if>
+		</where>
+		 order by t1.id desc limit #{offset} , #{rows}
+	</select>
+	
+	<select id="getCounts" parameterType="map" resultType="int">
+		SELECT count(1) FROM t_agreement
+		<where>
+		    <if test="coopid != null">AND coopid = #{coopid}</if>
+			<if test="title != null">AND title like #{title}</if>
+			<if test="type != null">AND type = #{type}</if>
+			<if test="state != null">AND state = #{state}</if>
+		</where>
+	</select>
+	
+	<select id="getInfoById" parameterType="int"
+		resultType="Agreement">
+		select t3.companyname as coopname,t1.* from t_agreement t1
+		left join t_member t3 on t1.coopid= t3.id  where t1.id=#{id}
+	</select>
+	
+	<select id="getExtInfoById" parameterType="string"
+		resultType="map">
+		SELECT * FROM t_agreement_ext where code=#{code}
+	</select>
+	<select id="getItemListById" parameterType="string"
+		resultType="map">
+		select t3.name as proname,t3.proarea  as candi,t3.specinfo as guige,t1.* from t_agreement_item t1
+		left join t_product t3 on t1.proid= t3.id where t1.pcode=#{code}
+	</select>
+	
+	
+
+	<insert id="insertAgreement" parameterType="agreement">
+		INSERT INTO t_agreement (no,title,createDate,type,state,coopid,jiafang,code)
+		VALUES (#{no}, #{title},#{createDate}, #{type},#{state},#{coopid},#{jiafang},#{code})
+	</insert>
+	
+	<insert id="insertAItem" parameterType="list">
+		INSERT INTO t_agreement_item (pcode,proid,shuliang,danjia,xiaoji,jhsj,jhdd,jflxr,lxdh,bz)
+		VALUES 
+		<foreach collection="list" item="item" index="index" separator=",">
+           (#{item.pcode}, #{item.proid},#{item.shuliang},#{item.danjia},#{item.xiaoji},#{item.jhsj},#{item.jhdd},#{item.jflxr},#{item.lxdh},#{item.bz})
+        </foreach>
+	</insert>
+	
+	<insert id="insertAExt" parameterType="list">
+		INSERT INTO t_agreement_ext (code,name,value)
+		VALUES 
+		<foreach collection="list" item="item" index="index" separator=",">
+           (#{item[0]}, #{item[1]},#{item[2]})
+        </foreach>
+	</insert>
+	 
+	<delete id="delete" parameterType="int">
+		delete from t_agreement where id=#{id}
+	</delete>
+	<delete id="deleteAItem" parameterType="string">
+		delete from t_agreement_item where pcode=#{code}
+	</delete>
+	<delete id="deleteAExt" parameterType="string">
+		delete from t_agreement_ext where code=#{code}
+	</delete>
+	
+	<update id="update" parameterType="agreement">
+		update t_agreement set no= #{no}, title= #{title},coopid=#{coopid}
+		where id=#{id}
+	</update>
+	
+	<update id="passAgree" parameterType="map">
+		update t_agreement set sxsj=#{sxsj} where id=#{id}
+	</update>
+	
+	
+	<update id="updateAExt" parameterType="map">
+		 update t_agreement_ext set value=#{value} where code=#{code} and name=#{name}
+	</update>
+	
+	
+	<update id="stateOpt" parameterType="map">
+		update t_agreement set state=#{state} where id = #{id}
+	</update>
+	
+	<select id="getCounts2" resultType="int">
+		SELECT count(1) FROM t_agreement
+	</select>
+	
+	<select id="getstate" resultType="int" parameterType="int">
+		SELECT state FROM t_agreement where id = #{id}
+	</select>
+
+</mapper>

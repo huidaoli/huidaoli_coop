@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cantodo.content.persistence.ProductMapper">
+
+	   <!-- 禁用缓存
+	<cache />
+	 -->
+	<resultMap type="com.cantodo.content.dto.Product"
+		id="productMap">
+		<id property="id" column="id" />
+		<result property="code" column="code" />
+		<result property="name" column="name" />
+		<result property="hotword" column="hotword" />
+		<result property="sort" column="sort" />
+		<result property="proarea" column="proarea" />
+		<result property="state" column="state" />
+		<result property="linestate" column="linestate" />
+		<result property="sync" column="sync" />
+		<result property="specinfo" column="specinfo" />
+		<result property="efficacyinfo" column="efficacyinfo" />
+		<result property="remark" column="remark" />
+		<result property="createDate" column="createDate" />
+		<result property="weight" column="weight" />
+		<result property="markingprice" column="markingprice" />
+		<result property="ourprice" column="ourprice" />
+		<result property="mallurl" column="mallurl" />
+		<result property="typeimg" column="typeimg" />
+		<result property="coopid" column="coopid" />
+		<result property="sortname" column="sortname" />
+		<result property="coopname" column="coopname" />
+	</resultMap>
+	
+	<resultMap type="com.cantodo.content.dto.ProPic"
+		id="proPicMap">
+		<id property="id" column="id" />
+		<result property="productcode" column="productcode" />
+		<result property="priority" column="priority" />
+		<result property="scaledpath" column="scaledpath" />
+		<result property="path" column="path" />
+		<result property="description" column="description" />
+	</resultMap>
+	
+	
+
+	<select id="getAllProduct" parameterType="map"
+		resultMap="productMap">
+		SELECT * from t_product
+		<where>
+		    <if test="search != null">or name like #{search}</if>
+		    <if test="search != null">or hotword like #{search}</if>
+			<if test="search != null">or specinfo like #{search}</if>
+			<if test="search != null">or efficacyinfo like #{search}</if>
+			<if test="search != null">or remark like #{search}</if>
+			<if test="state != null">and state = #{state}</if>
+			<if test="linestate != null">and linestate = #{linestate}</if>
+		</where>
+		 order by id desc limit #{offset} , #{rows}
+	</select>
+
+	<select id="getCounts" parameterType="map" resultType="int">
+		SELECT count(1) FROM t_product
+		<where>
+		    <if test="search != null">or name like #{search}</if>
+			<if test="search != null">or specinfo like #{search}</if>
+			<if test="search != null">or efficacyinfo like #{search}</if>
+			<if test="search != null">or remark like #{search}</if>
+			<if test="state != null">and state = #{state}</if>
+			<if test="linestate != null">and linestate = #{linestate}</if>
+		</where>
+	</select>
+	
+	<insert id="insert" parameterType="Product">
+		INSERT INTO t_product (code,name,hotword,sort,proarea,state,linestate,specinfo,efficacyinfo,remark,createDate,typeimg,weight,markingprice,ourprice,mallurl,coopid)
+		VALUES (#{code}, #{name}, #{hotword},#{sort},#{proarea},#{state},#{linestate},#{specinfo}, #{efficacyinfo}, #{remark},#{createDate},#{typeimg},#{weight},#{markingprice},#{ourprice},#{mallurl},#{coopid})
+	</insert>
+	
+	<update id="update" parameterType="Product">
+		update t_product set name=#{name},hotword=#{hotword},sort=#{sort},proarea=#{proarea},specinfo=#{specinfo},
+		efficacyinfo=#{efficacyinfo},weight=#{weight},markingprice=#{markingprice},ourprice=#{ourprice},remark=#{remark},typeimg=#{typeimg}
+		where id = #{id}
+	</update>
+	
+	<update id="updateMallURL" parameterType="map">
+		update t_product set mallurl=#{mallurl} where id = #{id}
+	</update>
+	
+	<delete id="deleteProPic" parameterType="String">
+		delete FROM t_product_picture where productcode = #{productcode}
+	</delete>
+	
+	<delete id="deleteProPicById" parameterType="int">
+		delete FROM t_product_picture where id = #{id}
+	</delete>
+	
+	<delete id="delete" parameterType="int">
+		delete FROM t_product where id = #{id}
+	</delete>
+	
+	<insert id="insertProPic" parameterType="list">
+		INSERT INTO t_product_picture (productcode,priority,scaledpath,path,description)
+		VALUES 
+		<foreach collection="list" item="item" index="index" separator=",">
+           (#{item.productcode}, #{item.priority},#{item.scaledpath},#{item.path},#{item.description})
+        </foreach>
+	</insert>
+	
+	
+	<select id="getAllProductToPage" parameterType="int"
+		resultMap="productMap">
+		select t2.dictName as sortname,t3.companyname as coopname,t1.* from t_product t1
+		left join t_dictbuss t2 on t1.sort = t2.dictId and t2.dictType=15 
+		left join t_member t3 on t1.coopid= t3.id
+	    where  t1.coopid =#{memid}
+	    and t1.linestate = 0 order by t1.id desc
+	</select>
+	
+	<select id="getAllProduct2" parameterType="map"
+		resultMap="productMap">
+		select t2.dictName as sortname,t3.companyname as coopname,t1.* from t_product t1
+		left join t_dictbuss t2 on t1.sort = t2.dictId and t2.dictType=15 
+		left join t_member t3 on t1.coopid= t3.id
+	    <where>
+		    <if test="name != null">and t1.name like #{name}</if>
+	        <if test="sort != null">and t1.sort = #{sort}</if>
+	        <if test="memid != null">and t1.coopid =#{memid}</if>
+	        <if test="linestate != null">and t1.linestate =#{linestate}</if>
+	        <if test="state != null">and t1.state =#{state}</if>
+	        <if test="sync != null">and t1.sync =#{sync}</if>
+		</where>
+		 order by t1.id desc limit #{offset} , #{rows}
+	</select>
+	<select id="getCounts2" parameterType="map" resultType="int">
+		SELECT count(1) FROM t_product 
+		<where>
+		    <if test="name != null">and name like #{name}</if>
+	        <if test="sort != null">and sort = #{sort}</if>
+	        <if test="memid != null">and coopid =#{memid}</if>
+	        <if test="linestate != null">and linestate =#{linestate}</if>
+	        <if test="state != null">and state =#{state}</if>
+	        <if test="sync != null">and sync =#{sync}</if>
+		</where>
+		
+	</select>
+	<select id="getInfoById" parameterType="int" resultType="Product">
+	    SELECT * FROM t_product where id = #{id}
+	</select>
+	
+	<select id="getProPicByCode" parameterType="String" resultMap="proPicMap">
+	    SELECT * FROM t_product_picture where productcode = #{productcode}
+	</select>
+	
+	<update id="lineOpt" parameterType="map">
+		update t_product set linestate=#{state} where id = #{id}
+	</update>
+	
+	<update id="stateOpt" parameterType="map">
+		update t_product set state=#{state} where id = #{id}
+	</update>
+	
+	<update id="synctoshop" parameterType="map">
+		update t_product set sync=#{state} where id = #{id}
+	</update>
+	
+	
+
+</mapper>

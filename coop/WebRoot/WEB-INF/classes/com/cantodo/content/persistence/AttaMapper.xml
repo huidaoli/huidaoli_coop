@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cantodo.content.persistence.AttaMapper">
+
+	   <!-- 禁用缓存
+	<cache />
+	 -->
+	
+	<resultMap type="com.cantodo.content.dto.Atta"
+		id="attaMap">
+		<id property="id" column="id" />
+		<result property="attaid" column="attaid" />
+		<result property="attaname" column="attaname" />
+		<result property="newname" column="newname" />
+		<result property="contcode" column="contcode" />
+		<result property="width" column="width" />
+		<result property="height" column="height" />
+	</resultMap>
+
+	<insert id="insert" parameterType="map">
+		INSERT INTO t_atta (attaid, attaname, newname,contcode,width,height)
+		VALUES (#{attaid}, #{attaname}, #{newname},#{contcode},#{width},#{height})
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		delete from t_atta where attaid=#{id}
+	</delete>
+	
+	<delete id="deleteContent" parameterType="String">
+		delete from t_atta where contcode=#{contcode}
+	</delete>
+	
+	<select id="getAttaById11" resultMap="attaMap">
+		SELECT attaid,attaname,newname,contcode,width,height FROM T_ATTA
+		where attaid in
+		<foreach item="item" index="index" collection="array"
+			open="(" separator="," close=")">
+			#{item}
+        </foreach>
+	</select>
+	
+	<select id="getAttaById" resultMap="attaMap">
+		SELECT attaid,attaname,newname,contcode,width,height FROM T_ATTA
+		where contcode = #{contcode}
+	</select>
+	
+	<select id="getAttaByImgId" resultMap="attaMap" parameterType="String"> 
+		SELECT attaid,attaname,newname,contcode,width,height FROM T_ATTA
+		where attaid = #{attaid}
+	</select>
+
+
+</mapper>

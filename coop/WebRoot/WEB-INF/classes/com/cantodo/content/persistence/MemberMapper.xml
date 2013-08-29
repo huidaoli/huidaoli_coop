@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cantodo.content.persistence.MemberMapper">
+
+    <!-- 禁用缓存
+	<cache />
+	 -->
+	 
+	
+	<resultMap type="com.cantodo.content.dto.Member"
+		id="memberMap">
+		<id property="id" column="id" />
+		<result property="code" column="code" />
+		<result property="userName" column="userName" />
+		<result property="password" column="password" />
+		<result property="realName" column="realName" />
+		<result property="cooptype" column="cooptype" />
+		<result property="mphone" column="mphone" />
+		<result property="fphone" column="fphone" />
+		<result property="email" column="email" />
+		<result property="address" column="address" />
+		<result property="area" column="area" />
+		<result property="sex" column="sex" />
+		<result property="companyname" column="companyname" />
+		<result property="createDate" column="createDate" />
+		<result property="remark" column="remark" />
+		<result property="logo" column="logo" />
+		<result property="state" column="state" />
+		<result property="flag" column="flag" />
+	</resultMap>
+	
+	
+	
+	
+	<select id="getAllCooperation" parameterType="map"
+		resultMap="memberMap">
+		select * from t_member
+		<where>
+			<if test="cooptype != null">AND cooptype = #{cooptype}</if>
+		</where>
+		order by id desc limit #{offset} , #{rows}
+	</select>
+	<select id="getCountsByCoonType" parameterType="map" resultType="int">
+		SELECT count(1) FROM t_member
+		<where>
+			<if test="cooptype != null">AND cooptype = #{cooptype}</if>
+		</where>
+	</select>
+	
+	
+
+	<select id="getAllInfo" parameterType="map"
+		resultMap="memberMap">
+		select * from t_member
+		<where>
+			<if test="username != null">AND userName like #{username}</if>
+			<if test="companyname != null">AND companyname like  #{companyname}</if>
+			<if test="realname != null">AND realname like #{realname}</if>
+			<if test="state != null">AND state = #{state}</if>
+		</where>
+		 order by id desc limit #{offset} , #{rows}
+	</select>
+
+	<select id="getCounts" parameterType="map" resultType="int">
+		SELECT count(1) FROM t_member
+		<where>
+			<if test="username != null">AND userName like #{uname}</if>
+			<if test="companyname != null">AND companyname like  #{companyname}</if>
+			<if test="realname != null">AND realname like #{realname}</if>
+			<if test="state != null">AND state = #{state}</if>
+		</where>
+	</select>
+
+
+
+	<select id="getInfoById" parameterType="int"
+		resultType="Member">
+		select * from t_member where id=#{id}
+	</select>
+
+	<select id="getMemberByUserName" parameterType="String"
+		resultType="Member">
+		select * from t_member where userName=#{userName}
+	</select>
+	
+	<select id="getMem" parameterType="map"
+		resultType="Member">
+		select * from t_member where userName=#{username} and password=#{password}
+	</select>
+	
+	<select id="getMemberCountByUserName" parameterType="String"
+		resultType="int">
+		select count(1) from t_member where userName=#{username}
+	</select>
+
+	<insert id="insert" parameterType="Member">
+		insert into t_member(code,userName,password,realName,cooptype,sex,createDate,state,flag)
+		VALUES (#{code}, #{userName},#{password},#{realName}, #{cooptype},#{sex}, #{createDate},#{state},#{flag})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from t_member where id=#{id}
+	</delete>
+	
+	<update id="updateStep" parameterType="Member">
+		update t_member set mphone= #{mphone},email=#{email},address=#{address},area=#{area},
+		companyname= #{companyname}, remark= #{remark},flag=#{flag},logo=#{logo} where id=#{id}
+	</update>
+	
+	<update id="update" parameterType="Member">
+		update t_member set realName= #{realName},cooptype= #{cooptype},sex= #{sex},mphone= #{mphone},email=#{email},address=#{address},area=#{area},
+		companyname= #{companyname}, remark= #{remark},flag=#{flag},logo=#{logo} where id=#{id}
+	</update>
+	
+	<update id="lockorunlock" parameterType="map">
+		update t_member set state = #{state} where id=#{id}
+	</update>
+	
+	<update id="resetPass" parameterType="map">
+		update t_member set password = #{password} where id=#{id}
+	</update>
+	
+	<update id="stateOpt" parameterType="map">
+		update t_member set state=#{state} where id = #{id}
+	</update>
+	
+	<update id="saveFphone" parameterType="map">
+		update t_member set fphone=#{fphone} where id = #{id}
+	</update>
+	
+	<select id="getIsFinish" parameterType="int"
+		resultType="int">
+		select flag from t_member where id=#{id}
+	</select>
+	
+
+</mapper>
