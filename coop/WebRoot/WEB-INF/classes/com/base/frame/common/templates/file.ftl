@@ -1,1 +1,0 @@
-<input type="file" name="props(${field.fieldName})">
